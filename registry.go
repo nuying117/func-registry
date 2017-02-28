@@ -18,6 +18,10 @@ func AddElement(funcName string, funcImpl interface{}) bool {
 		return false
 	}
 
+	if reflect.ValueOf(funcImpl).Kind() != reflect.Func {
+		return false
+	}
+
 	g_registry[funcName] = funcImpl
 	return true
 }
@@ -26,20 +30,38 @@ func DelElement(funcName string) bool {
 	if _, ok := g_registry[funcName]; !ok {
 		return true
 	}
-	g_registry[funcName] = nil
+	delete(g_registry, funcName)
 	return true
 }
 
-func Call(funcName string, params ...interface{}) []reflect.Value {
+func ElementExists(funcName string) bool {
+	if _, ok := g_registry[funcName]; ok {
+		return true
+	}
+
+	return false
+}
+
+func Clear() bool {
+	g_registry = nil
+	g_registry = make(RegistryRecType)
+	return true
+}
+
+func Call(funcName string, params ...interface{}) ([]reflect.Value, bool) {
 	existingFunc, ok := g_registry[funcName]
 	if !ok {
-		return nil
+		return nil, false
+	}
+
+	if reflect.ValueOf(existingFunc).Kind() != reflect.Func {
+		return nil, false
 	}
 
 	existingFuncValue := reflect.ValueOf(existingFunc)
 	paramNum := len(params)
 	if paramNum == 0 {
-		return existingFuncValue.Call(nil)
+		return existingFuncValue.Call(nil), true
 	}
 
 	paramValues := make([]reflect.Value, paramNum)
@@ -47,7 +69,7 @@ func Call(funcName string, params ...interface{}) []reflect.Value {
 		paramValues[k] = reflect.ValueOf(v)
 	}
 
-	return existingFuncValue.Call(paramValues)
+	return existingFuncValue.Call(paramValues), true
 }
 
 func Dump() {
