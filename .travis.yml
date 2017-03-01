@@ -1,6 +1,7 @@
 language: go
 script: 
   - go test -race -coverprofile=coverage.txt -covermode=atomic
+  - go tool cover -func=coverage.txt
 notifications:
   email: false
 after_success:
