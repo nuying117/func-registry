@@ -26,7 +26,7 @@ func TestAddFunction(t *testing.T) {
 		expected   bool
 	}{
 		{"aString", "abcdefg", false},
-		{"func1", testFunc1, true},
+		{"func1", testFunc1, false},
 		{"empty", nil, false},
 	}
 
