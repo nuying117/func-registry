@@ -1,4 +1,7 @@
 language: go
-script: go get github.com/nuying117/funcgistry && go test
+script: 
+  - go get github.com/nuying117/funcgistry && go test -race -coverprofile=coverage.txt -covermode=atomic
 notifications:
   email: false
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
