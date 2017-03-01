@@ -1,6 +1,6 @@
 language: go
 script: 
-  - go get github.com/nuying117/funcgistry && go test -race -coverprofile=coverage.txt -covermode=atomic
+  - go test -race -coverprofile=coverage.txt -covermode=atomic
 notifications:
   email: false
 after_success:
