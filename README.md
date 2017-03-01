@@ -1,4 +1,9 @@
 # funcgistry
+
+
+[![Build Status](https://travis-ci.org/nuying117/funcgistry.svg?branch=master)](https://travis-ci.org/nuying117/funcgistry)  [![codecov](https://codecov.io/gh/nuying117/funcgistry/branch/master/graph/badge.svg)](https://codecov.io/gh/nuying117/funcgistry)
+
+
 funcgistry is a go library to maintain a mapping between a function name(string) and a function, it can be used to invoke a function via its name.
 
 #example
